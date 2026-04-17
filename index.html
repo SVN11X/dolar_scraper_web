@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Precio del Dólar</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f4f9; }
+        .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        .precio { font-size: 3rem; color: #2ecc71; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Precio del Dólar</h2>
+        <div id="precio" class="precio">Cargando...</div>
+        <p>Última actualización: <span id="fecha">-</span></p>
+    </div>
+
+    <script>
+        // GitHub Pages servirá el JSON en esta ruta relativa
+        fetch('./data/precios.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('precio').innerText = `$${data.precio}`;
+                document.getElementById('fecha').innerText = data.ultima_actualizacion;
+            })
+            .catch(err => {
+                console.error("Error cargando datos:", err);
+                document.getElementById('precio').innerText = "Error";
+            });
+    </script>
+</body>
+</html>
