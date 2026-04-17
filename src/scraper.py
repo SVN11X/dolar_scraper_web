@@ -2,6 +2,7 @@ import requests
 import json
 import os
 from datetime import datetime
+from zoneinfo import ZoneInfo   # Python 3.9+
 
 def run_scraper():
     # API oficial de indicadores económicos de Chile (mindicador.cl)
@@ -22,12 +23,16 @@ def run_scraper():
 
     except Exception as e:
         print(f"ERROR: No se pudo obtener el precio del dólar desde {api_url}: {e}")
-        # Podrías reintentar o usar un valor por defecto; aquí detenemos la ejecución
         return  # Salir sin guardar datos corruptos
+
+    # Obtener la hora actual en la zona horaria de Chile (Santiago)
+    chile_tz = ZoneInfo("America/Santiago")
+    ahora_chile = datetime.now(chile_tz)
+    ultima_actualizacion = ahora_chile.strftime("%Y-%m-%d %H:%M:%S")
 
     datos = {
         "precio": precio_dolar,
-        "ultima_actualizacion": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "ultima_actualizacion": ultima_actualizacion,
         "moneda": "CLP",
         "fuente": "mindicador.cl (dólar observado)"
     }
