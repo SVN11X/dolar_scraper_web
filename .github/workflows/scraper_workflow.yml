@@ -2,7 +2,7 @@ name: Actualizar Datos Dolar
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # Cada 5 minutos
+    - cron: '0 * * * *'   # Cada hora
   workflow_dispatch:      # Permite ejecutarlo manualmente desde la pestaña Actions
 
 permissions:
